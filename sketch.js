@@ -5,13 +5,16 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var box1, pig1,pig3;
-var backgroundImg,platform;
+var backgroundImg, backgroundDark, platform;
 var bird, slingshot;
+var back;
+var score = 0;
 
 var gameState = "onSling";
 
 function preload() {
-    backgroundImg = loadImage("sprites/bg.png");
+    //backgroundImg = loadImage("sprites/bg.png");
+    //backgroundDark = loadImage("sprites/bg2.jpg")
 }
 
 function setup(){
@@ -42,21 +45,29 @@ function setup(){
 
     //log6 = new Log(230,180,80, PI/2);
     slingshot = new SlingShot(bird.body,{x:200, y:50});
+
+    Time();
 }
 
 function draw(){
-    background(backgroundImg);
+    if(back)
+    background(back);
     Engine.update(engine);
     //strokeWeight(4);
+
+    textSize(25);
+    text("Score:"+score, 1050,30);
     box1.display();
     box2.display();
     ground.display();
     pig1.display();
+    pig1.Score();
     log1.display();
 
     box3.display();
     box4.display();
     pig3.display();
+    pig3.Score();
     log3.display();
 
     box5.display();
@@ -86,3 +97,19 @@ function keyPressed(){
        // slingshot.attach(bird.body);
     }
 }
+
+async function Time() {
+    var timeDay = await fetch("http://worldtimeapi.org/api/timezone/America/New_York")
+    var timeDayJSON = await timeDay.json();
+
+    var get = timeDayJSON.datetime;
+    var data = get.slice(11,13);
+    console.log(data)
+
+    if(data > 06 && data < 20) {
+        back = loadImage("sprites/bg2.jpg");
+    }
+    else {
+        back = loadImage("sprites/bg.png");
+    }
+} 
