@@ -114,7 +114,7 @@ function keyPressed(){
 }
 
 async function Time() {
-    var timeDay = await fetch("http://worldtimeapi.org/api/timezone/America/New_York")
+    var timeDay = await fetch("https://worldtimeapi.org/api/timezone/America/New_York")
     var timeDayJSON = await timeDay.json();
 
     var get = timeDayJSON.datetime;
